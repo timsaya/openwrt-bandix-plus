@@ -14,7 +14,29 @@ reload_service() {
 
 append_iface() {
 	local name="$1"
-	[ -n "$name" ] && IFACES="$IFACES $name"
+
+	[ -n "$name" ] || return 0
+
+	case "$name" in
+		*/*)
+			logger -t bandix-plus "skip invalid iface: $name"
+			return 0
+		;;
+	esac
+
+	case " $IFACES " in
+		*" $name "*)
+			logger -t bandix-plus "skip duplicate iface: $name"
+			return 0
+		;;
+	esac
+
+	if [ ! -d "/sys/class/net/$name" ]; then
+		logger -t bandix-plus "skip missing iface: $name"
+		return 0
+	fi
+
+	IFACES="$IFACES $name"
 }
 
 start_service() {
@@ -25,6 +47,7 @@ start_service() {
 	local tcx_anchor_ingress_id
 	local tcx_anchor_egress_id
 	local traffic_enable_storage
+	local traffic_flush_interval
 	local history_window_minutes
 	local host
 	local port
@@ -41,6 +64,7 @@ start_service() {
 	config_get tcx_anchor_ingress_id 'general' 'tcx_anchor_ingress_id'
 	config_get tcx_anchor_egress_id 'general' 'tcx_anchor_egress_id'
 	config_get_bool traffic_enable_storage 'general' 'traffic_enable_storage' '0'
+	config_get traffic_flush_interval 'general' 'traffic_flush_interval' '600'
 	config_get history_window_minutes 'general' 'history_window_minutes' '10'
 	config_get host 'general' 'host' '127.0.0.1'
 	config_get port 'general' 'port' '8787'
@@ -72,6 +96,9 @@ start_service() {
 	[ -n "$tcx_anchor_ingress_id" ] && procd_append_param command --tcx-anchor-ingress-id "$tcx_anchor_ingress_id"
 	[ -n "$tcx_anchor_egress_id" ] && procd_append_param command --tcx-anchor-egress-id "$tcx_anchor_egress_id"
 	[ "$traffic_enable_storage" -eq 1 ] && procd_append_param command --traffic_enable_storage
+	if "$PROG" --help 2>/dev/null | grep -q -- "--traffic_flush_interval"; then
+		procd_append_param command --traffic_flush_interval "$traffic_flush_interval"
+	fi
 	procd_append_param command --history-window-minutes "$history_window_minutes"
 	procd_append_param command --host "$host"
 	procd_append_param command --port "$port"

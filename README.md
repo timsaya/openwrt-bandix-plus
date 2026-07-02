@@ -23,10 +23,18 @@ openwrt-bandix-plus is a dependency package for luci-app-bandix-plus, providing 
 opkg install /path/to/bandix-plus_xxx.ipk
 ```
 
+### Build
+
+```bash
+# feeds.conf
+    "src-git openwrt_bandix_plus https://github.com/timsaya/openwrt-bandix-plus.git;main"
+    "src-git luci_app_bandix_plus https://github.com/timsaya/luci-app-bandix-plus.git;main"
+```
+
 ## License
 
 This project is licensed under the Apache-2.0 License.
 
 ## Maintainer
 
-- [timsaya](https://github.com/timsaya) 
+- [timsaya](https://github.com/timsaya)

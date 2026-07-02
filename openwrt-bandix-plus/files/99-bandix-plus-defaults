@@ -11,6 +11,7 @@ uci -q get bandix_plus.general.netlink_priority >/dev/null 2>&1 || uci -q set ba
 uci -q get bandix_plus.general.tcx_anchor_ingress_id >/dev/null 2>&1 || uci -q set bandix_plus.general.tcx_anchor_ingress_id=''
 uci -q get bandix_plus.general.tcx_anchor_egress_id >/dev/null 2>&1 || uci -q set bandix_plus.general.tcx_anchor_egress_id=''
 uci -q get bandix_plus.general.traffic_enable_storage >/dev/null 2>&1 || uci -q set bandix_plus.general.traffic_enable_storage='0'
+uci -q get bandix_plus.general.traffic_flush_interval >/dev/null 2>&1 || uci -q set bandix_plus.general.traffic_flush_interval='600'
 uci -q get bandix_plus.general.port >/dev/null 2>&1 || uci -q set bandix_plus.general.port='8787'
 uci -q get bandix_plus.general.host >/dev/null 2>&1 || uci -q set bandix_plus.general.host='127.0.0.1'
 uci -q get bandix_plus.general.history_window_minutes >/dev/null 2>&1 || uci -q set bandix_plus.general.history_window_minutes='10'
