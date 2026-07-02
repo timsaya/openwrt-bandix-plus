@@ -22,10 +22,18 @@ openwrt-bandix-plus 是 luci-app-bandix-plus 的依赖包，提供网络流量�
 opkg install /path/to/bandix-plus_xxx.ipk
 ```
 
+### 从源码编译
+
+```bash
+# feeds.conf
+    "src-git openwrt_bandix_plus https://github.com/timsaya/openwrt-bandix-plus.git;main"
+    "src-git luci_app_bandix_plus https://github.com/timsaya/luci-app-bandix-plus.git;main"
+```
+
 ## 许可证
 
 本项目采用 Apache-2.0 许可证。
 
 ## 维护者
 
-- [timsaya](https://github.com/timsaya) 
+- [timsaya](https://github.com/timsaya)
