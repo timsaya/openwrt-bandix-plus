@@ -14,7 +14,29 @@ reload_service() {
 
 append_iface() {
 	local name="$1"
-	[ -n "$name" ] && IFACES="$IFACES $name"
+
+	[ -n "$name" ] || return 0
+
+	case "$name" in
+		*/*)
+			logger -t bandix-plus "skip invalid iface: $name"
+			return 0
+		;;
+	esac
+
+	case " $IFACES " in
+		*" $name "*)
+			logger -t bandix-plus "skip duplicate iface: $name"
+			return 0
+		;;
+	esac
+
+	if [ ! -d "/sys/class/net/$name" ]; then
+		logger -t bandix-plus "skip missing iface: $name"
+		return 0
+	fi
+
+	IFACES="$IFACES $name"
 }
 
 start_service() {
