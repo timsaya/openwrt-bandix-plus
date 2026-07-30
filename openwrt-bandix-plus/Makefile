@@ -1,8 +1,8 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=bandix-plus
-PKG_VERSION:=0.1.1
-PKG_RELEASE:=2
+PKG_VERSION:=0.1.2
+PKG_RELEASE:=1
 
 PKG_LICENSE:=Apache-2.0
 PKG_MAINTAINER:=timsaya
@@ -13,7 +13,7 @@ include $(INCLUDE_DIR)/package.mk
 include $(TOPDIR)/feeds/packages/lang/rust/rust-values.mk
 
 # 二进制文件的文件名和URL
-RUST_BANDIX_PLUS_VERSION:=0.1.1
+RUST_BANDIX_PLUS_VERSION:=0.1.2
 RUST_BINARY_FILENAME:=bandix-plus-$(RUST_BANDIX_PLUS_VERSION)-$(RUSTC_TARGET_ARCH).tar.gz
 
 
@@ -23,7 +23,7 @@ PKG_SOURCE_URL:=https://github.com/timsaya/bandix-plus/releases/download/v$(RUST
 
 # 修正二进制文件校验值
 ifeq ($(ARCH),aarch64)
-	PKG_HASH:=4cd6a55cc6b8fd5e380ffe9592166f346cb5f0b2189c500772711c11414fadd5
+	PKG_HASH:=eb4ae61a224f36b4e836d53e23b74d9b5d746ed9f0f25839b10e464fe5445f59
 else ifeq ($(ARCH),arm) # update.sh skip this tag, do not delete this comment
 	# Ref https://github.com/openwrt/packages/blob/master/lang/rust/rust-values.mk
 
@@ -39,28 +39,28 @@ else ifeq ($(ARCH),arm) # update.sh skip this tag, do not delete this comment
 	endif
 
 	ifeq ($(ARM_CPU_TYPE),arm-armel)
-		PKG_HASH:=de6f6f676b13fa642a8d0a0dac8b3c5d0665978c23431b1510611ca8ef85e492
+		PKG_HASH:=54ad332d3f5bf62eafeae6e0396cc3db8cd8413b674437a79f7f1fa4cf1282e7
 	else ifeq ($(ARM_CPU_TYPE),arm-armhf)
-		PKG_HASH:=0c18ff757ac58ba6af5a28c1ba7f4d10ad72b7a5e4a261bef5953c1b4fe5c24b
+		PKG_HASH:=f793a5d3069c8bffdfc72a044e097a6edf4326e0207628465da8686a51dfb052
 	else ifeq ($(ARM_CPU_TYPE),armv5te-armel)
-		PKG_HASH:=60d952970b0d4fa03d50973ea43b22ec8358f67d1903e494181acc685f552e3c
+		PKG_HASH:=85fbe6f1da86e2ab1ba446738018da7e332e8a638e460736c84ab1e89490fffb
 	else ifeq ($(ARM_CPU_TYPE),armv7-armel)
-		PKG_HASH:=de1283b2267a48bd7dc7bf45ac6e0fd8713a3a9352d85a5020e4b945c237eca2
+		PKG_HASH:=4912b40e6def4facb5bb9a9d2f60d7fb00c80099c58169ce10588d718ee9c07b
 	else ifeq ($(ARM_CPU_TYPE),armv7-armhf)
-		PKG_HASH:=291ee1e371f69e644a32f41e67310e9e7330f7fd670eeac6aeb86ad06f3d2b17
+		PKG_HASH:=eef012ae1fe55463dded8061089d1746b9332daccaff3abf3567531ffb889da6
 	else
 		PKG_HASH:=dummy
 	endif
 else ifeq ($(ARCH),mips)
-	PKG_HASH:=05d60c4e43e4b177240593f9442a59d4248c806fc59833564e35f6a2f7b9260e
+	PKG_HASH:=5ac144223a11b9e691c486d22a95af4a2104566c1be191bcfb51942d5b40d6a0
 else ifeq ($(ARCH),mipsel)
-	PKG_HASH:=d8eccefd91a2cbaf2c318f8a220d08ac55402ea40b7935d454e8be28499505e7
+	PKG_HASH:=b1274df63584ede7636306b5a4960ff2c775a1bc73689bf5ef6d8e89afd397ec
 else ifeq ($(ARCH),powerpc64)
-	PKG_HASH:=ac4b93fa85ec323f6ff0fe714898c4fd08ef3ca0da66d6ad05d697517179dac0
+	PKG_HASH:=0a7801f5befe6d61eee98a0c788739ea1f287d03c8b2fac1d752dba9449f9f61
 else ifeq ($(ARCH),riscv64)
-	PKG_HASH:=2148a4d78ff169ee1d99a4e1fecf95a02df96e5c0fc56e1cdff2f00a82fbb1ad
+	PKG_HASH:=f025ebd37f7a958870aef3fcee1389b294b8c0d6a79c79cfa912715b80eb5449
 else ifeq ($(ARCH),x86_64)
-	PKG_HASH:=b49f085027d914a2407d8bd2b54e223b95ef8297883209c8a2ae8a771bbc0e08
+	PKG_HASH:=799c65a830329589992703be0198b2ad06635eba059d94d53cee400a6d588db8
 else
 	PKG_HASH:=dummy
 endif
@@ -97,7 +97,7 @@ define Package/$(PKG_NAME)/install
 
 	# 安装配置文件
 	$(INSTALL_DIR) $(1)/usr/share/bandix-plus
-	$(INSTALL_CONF) ./files/bandix-plus.config $(1)/etc/config/bandix_plus
+	$(INSTALL_CONF) ./files/bandix_plus.config $(1)/etc/config/bandix_plus
 
 	# 安装 UCI defaults（仅补齐缺失配置项，不覆盖用户已有值）
 	$(INSTALL_DIR) $(1)/etc/uci-defaults

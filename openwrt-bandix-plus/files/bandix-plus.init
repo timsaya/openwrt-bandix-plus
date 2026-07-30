@@ -5,7 +5,7 @@ USE_PROCD=1
 PROG=/usr/bin/bandix-plus
 
 service_triggers() {
-	procd_add_reload_trigger "bandix-plus"
+	procd_add_reload_trigger "bandix_plus"
 }
 
 reload_service() {
@@ -33,7 +33,7 @@ start_service() {
 	local IFACES=""
 
 	config_load 'bandix_plus'
-	config_get_bool enable_traffic 'general' 'enable_traffic' '0'
+	config_get_bool enable_traffic 'general' 'enable_traffic' '1'
 	config_get log_level 'general' 'log_level'
 	config_get tc_backend 'general' 'tc_backend' 'auto'
 	config_get tc_order 'general' 'tc_order' 'default'
